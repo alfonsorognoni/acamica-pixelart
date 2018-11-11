@@ -32,7 +32,7 @@ colorPersonalizado.addEventListener('change',
     // Se guarda el color de la rueda en colorActual
     colorActual = colorPersonalizado.value;
     // Completar para que cambie el indicador-de-color al colorActual
-
+    cambiaIndicadorColor(colorActual)
 
   })
 );
@@ -60,9 +60,22 @@ function crearGrilla() {
 // seleccionar color
 paleta.addEventListener('click', (event) => {
   if (event.target.className === 'color-paleta') {
-    const indicardorDeColor = document.getElementById('indicador-de-color');
-    indicardorDeColor.style.background = event.target.style.backgroundColor;
+    cambiaIndicadorColor(event.target.style.backgroundColor);
   }
+})
+
+// cambiar indicador de color
+function cambiaIndicadorColor(color) {
+  const indicardorDeColor = document.getElementById('indicador-de-color');
+  indicardorDeColor.style.background = color;
+}
+
+// Pintar
+grillaPixeles.addEventListener('click', (event) => {
+  if (event.target.tagName === 'DIV') {
+    const indicardorDeColor = document.getElementById('indicador-de-color');
+    event.target.style.backgroundColor = indicardorDeColor.style.backgroundColor;
+  }  
 })
 
 
