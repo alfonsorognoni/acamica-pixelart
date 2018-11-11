@@ -38,16 +38,38 @@ colorPersonalizado.addEventListener('change',
 );
 
 // crear grilla
-for (var index = 0; index < nombreColores.length; index++) {
-  var color = nombreColores[index];
-  var colorPaleta = document.createElement('div');
-  colorPaleta.style.backgroundColor = color;
-  colorPaleta.className = 'color-paleta';
-  paleta.appendChild(colorPaleta);
+function crearPaleta() {
+  for (var index = 0; index < nombreColores.length; index++) {
+    var color = nombreColores[index];
+    var colorPaleta = document.createElement('div');
+    colorPaleta.style.backgroundColor = color;
+    colorPaleta.className = 'color-paleta';
+    paleta.appendChild(colorPaleta);
+  }
 }
 
+
 // grilla pixeles
-for (var index = 0; index < 1750; index++) {
-  var pixel = document.createElement('div');
-  grillaPixeles.appendChild(pixel);
+function crearGrilla() {
+  for (var index = 0; index < 1750; index++) {
+    var pixel = document.createElement('div');
+    grillaPixeles.appendChild(pixel);
+  }
 }
+
+// seleccionar color
+paleta.addEventListener('click', (event) => {
+  if (event.target.className === 'color-paleta') {
+    const indicardorDeColor = document.getElementById('indicador-de-color');
+    indicardorDeColor.style.background = event.target.style.backgroundColor;
+  }
+})
+
+
+function iniciar() {
+  crearGrilla();
+  crearPaleta();
+}
+
+// iniciar aplicación
+iniciar();
