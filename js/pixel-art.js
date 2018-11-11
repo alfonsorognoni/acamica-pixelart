@@ -1,6 +1,10 @@
 var grillaPixeles = document.getElementById('grilla-pixeles');
 var paleta = document.getElementById('paleta');
 
+let mouseApretado = false;
+
+const indicardorDeColor = document.getElementById('indicador-de-color');
+
 var nombreColores = ['White', 'LightYellow',
   'LemonChiffon', 'LightGoldenrodYellow', 'PapayaWhip', 'Moccasin', 'PeachPuff', 'PaleGoldenrod', 'Bisque', 'NavajoWhite', 'Wheat', 'BurlyWood', 'Tan',
   'Khaki', 'Yellow', 'Gold', 'Orange', 'DarkOrange', 'OrangeRed', 'Tomato', 'Coral', 'DarkSalmon', 'LightSalmon', 'LightCoral', 'Salmon', 'PaleVioletRed',
@@ -66,18 +70,47 @@ paleta.addEventListener('click', (event) => {
 
 // cambiar indicador de color
 function cambiaIndicadorColor(color) {
-  const indicardorDeColor = document.getElementById('indicador-de-color');
   indicardorDeColor.style.background = color;
 }
 
 // Pintar
 grillaPixeles.addEventListener('click', (event) => {
   if (event.target.tagName === 'DIV') {
-    const indicardorDeColor = document.getElementById('indicador-de-color');
+    chequearHayColor();
     event.target.style.backgroundColor = indicardorDeColor.style.backgroundColor;
   }  
 })
 
+grillaPixeles.addEventListener('mousedown', (event) => {
+  mouseApretado = true;
+})
+grillaPixeles.addEventListener('mouseup', (event) => {
+  mouseApretado = false;
+})
+
+// pintar apretado
+grillaPixeles.addEventListener('mousemove', (event) => {
+  if (mouseApretado && event.target.tagName === 'DIV') {
+    event.target.style.backgroundColor = indicardorDeColor.style.backgroundColor;
+  }
+})
+
+// se sale de la grilla
+grillaPixeles.addEventListener('mouseleave', (event) => {
+  mouseApretado = false;
+})
+
+// alerta no hay color
+function alertaNoColor() {
+  alert('Debe seleccionar un color');
+  mouseApretado = false;
+  return false;
+}
+
+// chequear color seleccionado
+function chequearHayColor() {
+  return (indicardorDeColor.style.backgroundColor) ? true : alertaNoColor();
+}
 
 function iniciar() {
   crearGrilla();
