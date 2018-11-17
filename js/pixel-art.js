@@ -1,9 +1,9 @@
-var grillaPixeles = document.getElementById('grilla-pixeles');
-var paleta = document.getElementById('paleta');
+var $grillaPixeles = document.getElementById('grilla-pixeles');
+var $paleta = document.getElementById('paleta');
 
 let mouseApretado = false;
 
-const indicardorDeColor = document.getElementById('indicador-de-color');
+const $indicardorDeColor = document.getElementById('indicador-de-color');
 
 var nombreColores = ['White', 'LightYellow',
   'LemonChiffon', 'LightGoldenrodYellow', 'PapayaWhip', 'Moccasin', 'PeachPuff', 'PaleGoldenrod', 'Bisque', 'NavajoWhite', 'Wheat', 'BurlyWood', 'Tan',
@@ -48,7 +48,7 @@ function crearPaleta() {
     var colorPaleta = document.createElement('div');
     colorPaleta.style.backgroundColor = color;
     colorPaleta.className = 'color-paleta';
-    paleta.appendChild(colorPaleta);
+    $paleta.appendChild(colorPaleta);
   }
 }
 
@@ -57,12 +57,12 @@ function crearPaleta() {
 function crearGrilla() {
   for (var index = 0; index < 1750; index++) {
     var pixel = document.createElement('div');
-    grillaPixeles.appendChild(pixel);
+    $grillaPixeles.appendChild(pixel);
   }
 }
 
 // seleccionar color
-paleta.addEventListener('click', (event) => {
+$paleta.addEventListener('click', (event) => {
   if (event.target.className === 'color-paleta') {
     cambiaIndicadorColor(event.target.style.backgroundColor);
   }
@@ -70,33 +70,33 @@ paleta.addEventListener('click', (event) => {
 
 // cambiar indicador de color
 function cambiaIndicadorColor(color) {
-  indicardorDeColor.style.background = color;
+  $indicardorDeColor.style.background = color;
 }
 
 // Pintar
-grillaPixeles.addEventListener('click', (event) => {
+$grillaPixeles.addEventListener('click', (event) => {
   if (event.target.tagName === 'DIV') {
     chequearHayColor();
-    event.target.style.backgroundColor = indicardorDeColor.style.backgroundColor;
+    event.target.style.backgroundColor = $indicardorDeColor.style.backgroundColor;
   }  
 })
 
-grillaPixeles.addEventListener('mousedown', (event) => {
+$grillaPixeles.addEventListener('mousedown', (event) => {
   mouseApretado = true;
 })
-grillaPixeles.addEventListener('mouseup', (event) => {
+$grillaPixeles.addEventListener('mouseup', (event) => {
   mouseApretado = false;
 })
 
 // pintar apretado
-grillaPixeles.addEventListener('mousemove', (event) => {
+$grillaPixeles.addEventListener('mousemove', (event) => {
   if (mouseApretado && event.target.tagName === 'DIV') {
-    event.target.style.backgroundColor = indicardorDeColor.style.backgroundColor;
+    event.target.style.backgroundColor = $indicardorDeColor.style.backgroundColor;
   }
 })
 
 // se sale de la grilla
-grillaPixeles.addEventListener('mouseleave', (event) => {
+$grillaPixeles.addEventListener('mouseleave', (event) => {
   mouseApretado = false;
 })
 
@@ -109,8 +109,26 @@ function alertaNoColor() {
 
 // chequear color seleccionado
 function chequearHayColor() {
-  return (indicardorDeColor.style.backgroundColor) ? true : alertaNoColor();
+  return ($indicardorDeColor.style.backgroundColor) ? true : alertaNoColor();
 }
+
+// borrar con jQuery
+$('#borrar').on('click', (event) => {
+  let $pixeles = $('#grilla-pixeles div');
+  $pixeles.animate({
+    backgroundColor: 'white'
+  }, 1000);
+});
+
+//cargar superheroe
+$('img.superheroe').on('click', function(event) {
+  let superheroe = $(this).attr('id');  
+  cargarSuperheroe(window[superheroe]);
+});
+
+// guardar
+$('#guardar').on('click', (event) => guardarPixelArt());
+
 
 function iniciar() {
   crearGrilla();
